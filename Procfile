@@ -1,0 +1,1 @@
+web: gunicorn api_cuenta.wsgi --log-file -
