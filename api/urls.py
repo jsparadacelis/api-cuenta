@@ -1,5 +1,5 @@
-from django.urls import path
-from .views import transaccion, cuenta, perfil, cliente
+from django.urls import path, include
+from .views import transaccion, cuenta, perfil, cliente, root
 
 urlpatterns = [
     #Urls for cuenta
@@ -17,5 +17,7 @@ urlpatterns = [
     path('perfil/<int:pk>', perfil.PerfilDetail.as_view()),
     #Urls for cliente
     path('cliente/', cliente.ClienteList.as_view()),
-    path('cliente/<int:pk>', cliente.ClienteDetail.as_view())
+    path('cliente/<int:pk>', cliente.ClienteDetail.as_view()),
+
+    path("", include(root.router.urls) , name="")
 ]
