@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <title>API Cuenta | Root</title>
+</head>
+
+<body>
+    <div class="jumbotron bg-info text-white">
+        <h1>Bienvenido</h1>
+        <h2>API CUENTA DJANGO</h2>
+        <p>Api rest para manejo de cuentas, desarrollada con Django y Django Rest Framework </p>
+    </div>
+    <div class="row col-md-10 offset-1">
+        <div class="container">
+            <h3 style="text-align:center">Lista de URLs</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Link</th>
+                        <th scope="col">URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Cuenta List</td>
+                        <td>GET</td>
+                        <td><a href="{% url 'cuenta' %}">cuenta</a></td>
+                        <td>/cuenta/</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Cuenta Detail</td>
+                        <td>GET/POST/DELETE/PUT</td>
+                        <td><a href="{% url 'cuenta' %}1">cuenta id</a></td>
+                        <td>/cuenta/{id}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Transaccion List</td>
+                        <td>GET</td>
+                        <td><a href="{% url 'transaccion' %}">transaccion</a></td>
+                        <td>/transaccion/</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Transaccion Detail</td>
+                        <td>GET/POST/DELETE/PUT</td>
+                        <td><a href="{% url 'transaccion' %}1">transaccion id</a></td>
+                        <td>/transaccion/{id}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Perfil List</td>
+                        <td>GET</td>
+                        <td><a href="{% url 'perfil' %}">perfil</a></td>
+                        <td>/perfil/</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>Perfil Detail</td>
+                        <td>GET/POST/DELETE/PUT</td>
+                        <td><a href="{% url 'perfil' %}1">perfil id</a></td>
+                        <td>/perfil/{id}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td>Cliente List</td>
+                        <td>GET</td>
+                        <td><a href="{% url 'cliente' %}">cliente</a></td>
+                        <td>/cliente/</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td>Cliente Detail</td>
+                        <td>GET/POST/DELETE/PUT</td>
+                        <td><a href="{% url 'cliente' %}1">cliente id</a></td>
+                        <td>/cliente/{id}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
