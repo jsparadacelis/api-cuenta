@@ -67,9 +67,9 @@ def add_money(request):
 
         
 
-@api_view(['POST'])
+@api_view(['PUT'])
 def set_zero(request):
-    if request.method == 'POST':
+    if request.method == 'PUT':
         try:
             cuenta = Cuenta.objects.get(pk = request.data["id"])
             cuenta.saldo = 0
