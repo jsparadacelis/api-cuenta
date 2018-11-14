@@ -102,7 +102,7 @@ DATABASES = {
         'USER': 'api_user',
         'PASSWORD': 'admin123',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
