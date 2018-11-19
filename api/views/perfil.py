@@ -1,7 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
-
 #DRF Utilities
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -10,7 +6,8 @@ from rest_framework.response import Response
 #Django Utilities
 from ..models import *
 from ..serializers import *
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.shortcuts import render
 
 #Get a collection of Perfil
 class PerfilList(generics.ListCreateAPIView):
@@ -32,7 +29,7 @@ class PerfilDetail(APIView):
     def delete(self, request, pk, format=None):
         perfil = self.get_object(pk)
         perfil.delete()
-        return HttpResponse("status=status.HTTP_204_NO_CONTENT")
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
     
     def put(self, request, pk, format=None):
         perfil = self.get_object(pk)

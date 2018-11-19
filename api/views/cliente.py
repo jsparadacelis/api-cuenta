@@ -1,7 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
-
 #DRF Utilities
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -10,7 +6,9 @@ from rest_framework.response import Response
 #Django Utilities
 from ..models import *
 from ..serializers import *
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.shortcuts import render
+
 
 class ClienteList(generics.ListCreateAPIView):
     queryset = Cliente.objects.all()
@@ -31,7 +29,7 @@ class ClienteDetail(APIView):
     def delete(self, request, pk, format=None):
         cliente = self.get_object(pk)
         cliente.delete()
-        return HttpResponse("status=status.HTTP_204_NO_CONTENT")
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
     
     def put(self, request, pk, format=None):
         cliente = self.get_object(pk)

@@ -1,21 +1,16 @@
-from django.shortcuts import render
-
-# Create your views here.
-
 #DRF Utilities
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
-from rest_framework import viewsets
 
 #Django Utilities
 from ..models import *
 from ..serializers import *
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, Http404
 from django.db import connection
+from django.shortcuts import render
 
 #Get a collection of Cuentas
 class CuentaList(generics.ListCreateAPIView):
@@ -38,7 +33,7 @@ class CuentaDetail(APIView):
     def delete(self, request, pk, format=None):
         cuenta = self.get_object(pk)
         cuenta.delete()
-        return HttpResponse("status=status.HTTP_204_NO_CONTENT")
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
     def put(self, request, pk, format=None):
         cuenta = self.get_object(pk)
@@ -62,11 +57,10 @@ def add_money(request):
         except KeyError:
             return Response("Invalid key")
         except Cuenta.DoesNotExist:
-            return Response("Account doesn't exist")
+            raise Http404("Account doesn't exist")
             
 
-        
-
+    
 @api_view(['PUT'])
 def set_zero(request):
     if request.method == 'PUT':
@@ -81,7 +75,7 @@ def set_zero(request):
         except KeyError:
             return Response("Invalid key")
         except Cuenta.DoesNotExist:
-            return Response("Account doesn't exist")
+            raise Http404("Account doesn't exist")
         
 
 @api_view(['GET'])
@@ -99,7 +93,7 @@ def list_tran(request, id):
                 list_data.append(cuenta_serializer.data)
                 return Response(list_data)
             except Cuenta.DoesNotExist:
-                return Response("Account doesn't exist")
+                raise Http404("Account doesn't exist")
         else:
             return Response("Unsupported Method")
    
