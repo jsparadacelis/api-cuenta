@@ -1,0 +1,2 @@
+migrations/*
+views/__pycache__
