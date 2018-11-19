@@ -2,3 +2,4 @@ migrations/*
 views/__pycache__
 __pycache__
 api/__pycache__
+api_cuenta/__pycache__
