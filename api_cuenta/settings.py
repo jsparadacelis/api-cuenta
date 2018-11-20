@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     #For working with DRF :D
     'rest_framework',
     'api',
+    'cliente',
+    'cuenta',
+    'perfil',
+    'transaccion'
 ]
 
 #Variable for sattings in DRF

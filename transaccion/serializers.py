@@ -4,23 +4,6 @@ from rest_framework import serializers
 #Django Utilities
 from django.db import transaction
 from .models import *
-from django.contrib.auth.models import User
-
-class CuentaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cuenta
-        fields = ('id','banco','fecha','saldo')
-    
-class PerfilSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Perfil
-        fields = ('id','cuenta','cliente','rol')
-
-class ClienteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cliente
-        fields = ('id','nombre','apellido','cedula')
-        
 
 class TransListSerializer(serializers.ListSerializer):
     class Meta:
@@ -53,5 +36,3 @@ class TransaccionSerializer(serializers.ModelSerializer):
             )
             transaccion.save()
         return transaccion
-
-

@@ -1,5 +1,5 @@
 migrations/*
-views/__pycache__
+views/__pycache__/*.pyc
 __pycache__
-api/__pycache__
-api_cuenta/__pycache__
+api/__pycache__/*.pyc
+api_cuenta/__pycache__/*.pyc
