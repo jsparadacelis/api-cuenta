@@ -19,9 +19,10 @@ class CuentaList(generics.ListCreateAPIView):
 
 #Get a cuenta
 class CuentaDetail(APIView):
-    def get_object(self, pk):
+    @classmethod
+    def get_object(cls, pk):
         try:
-            return Cuenta.objects.get(pk=pk)
+            return Cuenta.objects.select_for_update().get(pk=pk)
         except Cuenta.DoesNotExist:
             raise Http404
     

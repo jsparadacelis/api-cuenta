@@ -35,11 +35,15 @@ class TransaccionSerializer(serializers.ModelSerializer):
         list_serializer_class = TransListSerializer
         fields = ('id','tienda','perfil','valor')
 
-    @classmethod
-    def create(cls, validated_data):
+    
+    def create(self, validated_data):
         with transaction.atomic():
             perfil = validated_data["perfil"]
             cuenta = perfil.cuenta
+            if cuenta.saldo <= 0:
+                raise serializers.ValidationError("Fondos insuficientes")
+
+
             cuenta.saldo = cuenta.saldo - validated_data["valor"]
             cuenta.save()
             transaccion = Transaccion(
