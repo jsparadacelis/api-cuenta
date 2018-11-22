@@ -96,7 +96,7 @@ ON_HEROKU = os.environ.get('ON_HEROKU')
 
 
 if ON_HEROKU == '1':
-|   import dj_database_url
+    import dj_database_url
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
