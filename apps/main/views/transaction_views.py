@@ -4,26 +4,26 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 #Django Utilities
-from .models import *
+from ..models import Transaction
 from .serializers import *
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
 
-class TransaccionList(generics.ListCreateAPIView):
-    queryset = Transaccion.objects.all()
+class TransactionList(generics.ListCreateAPIView):
+    queryset = Transaction.objects.all()
     serializer_class = TransaccionSerializer
 
-class TransaccionDetail(APIView):
+class TransactionDetail(APIView):
     def get_object(self, pk):
         try:
-            return Transaccion.objects.get(pk=pk)
-        except Transaccion.DoesNotExist:
+            return Transaction.objects.get(pk=pk)
+        except Transaction.DoesNotExist:
             raise Http404
     
     def get(self, request, pk, format=None):
         transaccion = self.get_object(pk)
-        serializer = TransaccionSerializer(transaccion)
+        serializer = TransactionSerializer(transaccion)
         return Response(serializer.data)
     
     def delete(self, request, pk, format=None):
@@ -33,7 +33,7 @@ class TransaccionDetail(APIView):
     
     def put(self, request, pk, format=None):
         transaccion = self.get_object(pk)
-        serializer = TransaccionSerializer(transaccion, data=request.data)
+        serializer = TransactionSerializer(transaccion, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

@@ -6,29 +6,29 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
 
 #Django Utilities
-from .models import *
+from ..models import Account
 from .serializers import *
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
 #Get a collection of Cuentas
-class CuentaList(generics.ListCreateAPIView):
-    queryset = Cuenta.objects.all()
-    serializer_class = CuentaSerializer
+class AccountList(generics.ListCreateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
 
 #Get a cuenta
-class CuentaDetail(APIView):
+class AccountDetail(APIView):
     
     def get_object(self, pk):
         try:
             #Locking object
-            return Cuenta.objects.select_for_update().get(pk=pk)
-        except Cuenta.DoesNotExist:
+            return Account.objects.select_for_update().get(pk=pk)
+        except Account.DoesNotExist:
             raise Http404
     
     def get(self, request, pk, format=None):
         cuenta = self.get_object(pk)
-        serializer = CuentaSerializer(cuenta)
+        serializer = AccountSerializer(cuenta)
         return Response(serializer.data)
     
     def delete(self, request, pk, format=None):
@@ -38,7 +38,7 @@ class CuentaDetail(APIView):
     
     def put(self, request, pk, format=None):
         cuenta = self.get_object(pk)
-        serializer = CuentaSerializer(cuenta, data=request.data)
+        serializer = AccountSerializer(cuenta, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -48,16 +48,16 @@ class CuentaDetail(APIView):
 def add_money(request):
     if request.method == 'PUT':
         try:
-            cuenta = Cuenta.objects.get(pk = request.data["id"])
+            cuenta = Account.objects.get(pk = request.data["id"])
             cuenta.saldo += request.data["deposit"]
-            serializerResponse = CuentaSerializer(cuenta)
+            serializerResponse = AccountSerializer(cuenta)
             serializer = SaldoSerializer(cuenta, data = request.data)
             if serializer.is_valid():
                 serializer.save()
             return Response(serializerResponse.data)
         except KeyError:
             return Response("Invalid key")
-        except Cuenta.DoesNotExist:
+        except Account.DoesNotExist:
             raise Http404("Account doesn't exist")
             
 
