@@ -5,56 +5,52 @@ from rest_framework import serializers
 from django.db import transaction
 
 # local apps
-from .models import Cuenta, Perfil, Cliente, Transaccion
+from .models import Account, Profile, Client, Transaction
 
 
-class ClienteSerializer(serializers.ModelSerializer):
+class ClientSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cliente
-        fields = ('id','nombre','apellido','cedula')
+        model = Client
+        fields = ('id', 'name', 'last_name', 'identification')
 
 
-class CuentaSerializer(serializers.ModelSerializer):
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Cuenta
-        fields = ('id','banco','fecha','saldo')
+        model = Account
+        fields = ('id', 'bank', 'create_date', 'balance')
 
 
 class TransListSerializer(serializers.ListSerializer):
     class Meta:
-        model = Transaccion
-        fields = ('id','tienda','perfil','valor',)
+        model = Transaction
+        fields = ('id', 'commerce', 'profile', 'value')
 
 
-class TransaccionSerializer(serializers.ModelSerializer):
-
+class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Transaccion
+        model = Transaction
         list_serializer_class = TransListSerializer
-        fields = ('id','tienda','perfil','valor')
+        fields = ('id', 'commerce', 'profile', 'value')
 
     
     def create(self, validated_data):
         with transaction.atomic():
-            perfil = validated_data["perfil"]
-            cuenta = perfil.cuenta
-            if cuenta.saldo <= 0:
+            profile = validated_data["profile"]
+            account = Profile.account
+            if Account.balance <= 0:
                 raise serializers.ValidationError("Fondos insuficientes")
-
-
-            cuenta.saldo = cuenta.saldo - validated_data["valor"]
-            cuenta.save()
-            transaccion = Transaccion(
-                tienda = validated_data['tienda'], 
-                perfil = perfil,
-                valor = validated_data["valor"]
+            account.balance = account.balance - validated_data["valor"]
+            account.save()
+            Transaction = Transaction(
+                commerce = validated_data['commerce'], 
+                profile = profile,
+                value = validated_data["value"]
             )
-            transaccion.save()
-        return transaccion
+            Transaction.save()
+        return Transaction
 
 
-
-class PerfilSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Perfil
-        fields = ('id','cuenta','cliente','rol')
+        model = Profile
+        fields = ('id', 'account', 'client', 'role')
